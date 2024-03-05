@@ -1,0 +1,15 @@
+.wrapp{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 350px;
+    height: 450px;
+    background-color: grey ;
+    margin: 5px;
+}
+
+img {
+    object-fit: contain;
+    width: 350px;
+    height: 250px;
+}
