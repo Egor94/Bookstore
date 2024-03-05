@@ -6,7 +6,7 @@ import BookCard from "./BookCard";
 function Main(props) {
     return(
         <div className="container">
-            <h1>New Releases Books</h1>
+            <h2>New Releases Books</h2>
             <div className={styles.books_list}>
                 {props.booksFetch.map((book)=> {
                     return <BookCard key={book.isbn13} book={book} getBook={props.getBook}/>
