@@ -1,15 +1,39 @@
-.wrapp{
+.wrapp {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     width: 350px;
     height: 450px;
-    background-color: grey ;
-    margin: 5px;
+    margin: 45px auto 0;
 }
 
-img {
+.card_img {
+    background-color: #D7E4FD;
     object-fit: contain;
     width: 350px;
-    height: 250px;
+    height: 265px;
+    margin-bottom: 20px;
+}
+
+.downWrapp {
+    justify-content: space-between;
+}
+
+.cardSubtitle {
+    color: #A8A8A8;
+    height: 35px;
+    margin-bottom: 40px;
+}
+
+.card_price {
+    font-family: 'Bebas Neue';
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.bookTitle {
+    height: 60px;
+    margin-bottom: 5px;
 }

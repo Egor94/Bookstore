@@ -1,0 +1,43 @@
+.wrapp {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1120px;
+    align-items: center;
+    margin: 15px auto 70px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    width: 180px;
+    height: 65px;
+}
+
+.btnBookstore {
+    background-color: #fff;
+    border: none;
+    font-family: 'Bebas Neue';
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 60px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.input {
+    width: 545px;
+    height: 55px;
+    margin: 0 15px 0 15px;
+    border-color: #E7E7E7;
+    color: #E7E7E7;
+    border-style: solid;
+    padding-left: 15px;
+    font-size: 16px;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+    margin: 15px;
+}

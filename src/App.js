@@ -1,59 +1,56 @@
-import logo from './logo.svg';
 import './App.css';
 import HomePage from "./homePage/HomePage";
 import AccountPage from "./accountPage/AccountPage";
 import BookPage from "./bookPage/BookPage";
-import {BrowserRouter as Router, Route, Routes, Link, redirect, useNavigate} from "react-router-dom";
-import { useEffect, useState } from 'react';
-
+import BusketPage from './busketPage/BusketPage';
+import LikePage from './likePage/LikePage';
+import { Route, Routes } from "react-router-dom";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBooks, getBooksById, getBook, initLS } from './redux/booksSlice';
 
 function App() {
+	const dispatch = useDispatch();
 
-  const [booksFetch, setBooksFetch] = useState([]);
-  const [pageFetch, setPageFetch] = useState(null);
-  const [errorFetch, setErrorFetch] = useState(null);
-  const [totalFetch, setTotalFetch] = useState(null);
-  const [currentBook, setCurrentBook] = useState(null); 
-  const navigate = useNavigate();
+	const isGetBooksLoading = useSelector((state) => state.booksStore.isGetBooksLoading);
+	const getBooksError = useSelector((state) => state.booksStore.error);
+	const currentBook = useSelector((state) => state.booksStore.currentBook);
 
-  const getBooks = async (page) => {
-    const data = await fetch(`https://api.itbook.store/1.0/search/mongodb/${page}`);
-    if (data.ok) { 
-     let json = await data.json();
-     setBooksFetch(json.books);
-     setPageFetch(json.page);
-     setErrorFetch(json.error);
-     setTotalFetch(json.total);
-    } 
-  }
-  const getBook = async (id) => {
-    const book = await fetch(`https://api.itbook.store/1.0/books/${id}`);
-    if(book.ok) {
-      let json = await book.json();
-      console.log(json);
-      setCurrentBook(json);
-      navigate(`/${json.isbn13}`);
-    }
-  }
+	const fetchCurrentBook = () => {
+		const pathName = window.location.pathname;
+		if (pathName.startsWith("/book/")) {
+			const id = pathName.slice(6);
+			dispatch(getBook(id));
+		}
+	}
 
-  useEffect( () => {
-    getBooks(1);
-  }, []);
+	useEffect(() => {
+		dispatch(initLS());
+		fetchCurrentBook();
+		dispatch(getBooks(1));
+	}, [dispatch]);
 
-  return (
-    // <Router> 
-    <div className="App">
-      
-      <Routes>
-      <Route path="/" element={<HomePage getBooks={getBooks} booksFetch={booksFetch} getBook={getBook}/>} />
-      <Route path="/account" element={<AccountPage/>} />
-      {currentBook && <Route path={`/${currentBook.isbn13}`} element={<BookPage currentBook={currentBook}/>} />}
 
-      </Routes>
-    </div>
-    // </Router> 
+	if (isGetBooksLoading) { return <div>Loading...</div> }
 
-  );
+	if (getBooksError) { return <div>Oops!</div> }
+
+	return (
+		<div className="App">
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/account" element={<AccountPage />} />
+				<Route path='/busket' element={<BusketPage />} />
+				<Route path='/like' element={<LikePage />} />
+
+				{currentBook && (
+					<Route
+						path={`/book/${currentBook.isbn13}`}
+						element={<BookPage currentBook={currentBook} />} />
+				)}
+			</Routes>
+		</div>
+	);
 }
 
 export default App;

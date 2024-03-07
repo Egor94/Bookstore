@@ -1,9 +1,12 @@
-import {Link} from "react-router-dom";
+import Header from "../common/Header";
 
 function AccountPage() {
-    return (<div>
-        <Link to='/'>Home</Link>
-        </div>
-    )
+	return (
+		<>
+			<Header />
+			<div className="container">Account</div>
+		</>
+	)
 }
+
 export default AccountPage;
