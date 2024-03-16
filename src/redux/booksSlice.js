@@ -1,7 +1,9 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createReducer, createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
 	booksFetch: [],
+	currentPage: 1,
+	totalPages: 1,
 	isGetBooksLoading: false,
 	getBooksError: null,
 
@@ -19,7 +21,7 @@ export const getBooks = createAsyncThunk(
 	'booksStore/getBooks',
 	async (page) => {
 		let json;
-		const data = await fetch(`https://api.itbook.store/1.0/search/mongodb/${page}`);
+		const data = await fetch(`https://api.itbook.store/1.0/new`);
 		if (data.ok) {
 			json = await data.json();
 		}
@@ -95,9 +97,27 @@ export const booksSlice = createSlice({
 			const parsedListFromLs = JSON.parse(listFromLs);
 			parsedListFromLs.push(id);
 			window.localStorage.setItem(listType, JSON.stringify(parsedListFromLs));
-
 			state[listType] = [...state[listType], book];
 		},
+
+		removeBookFromBL: (state, params) => {
+			const id = params.payload;
+			const getBooksFromLS = 	JSON.parse(localStorage.getItem('busketBooks'));
+			const foundByID = getBooksFromLS.indexOf(id);
+			getBooksFromLS.splice(foundByID, 1);
+			localStorage.setItem('busketBooks', JSON.stringify(getBooksFromLS));
+			const indexBook = state.busketBooks.findIndex(book => book.isbn13 === id)
+			state.busketBooks.splice(indexBook, 1);
+		},
+
+		removeBookFromBusket: (state, params) => {
+			const id = params.payload;
+			const getBooksFromLS = 	JSON.parse(localStorage.getItem('busketBooks'));
+			const freshArr = getBooksFromLS.filter((item) => item !== id);
+			localStorage.setItem('busketBooks', JSON.stringify(freshArr));
+			const newState = state.busketBooks.filter((item) => item.isbn13 !== id);
+			state.busketBooks = newState;
+		}
 	},
 	extraReducers: (builder) => {
 		// getBooks
@@ -107,6 +127,8 @@ export const booksSlice = createSlice({
 		builder.addCase(getBooks.fulfilled, (state, action) => {
 			state.isGetBooksLoading = false;
 			state.booksFetch = action.payload.books;
+			state.currentPage = Number(action.payload.page);
+			state.totalPages = Number(action.payload.total);
 		})
 		builder.addCase(getBooks.rejected, (state, action) => {
 			state.isGetBooksLoading = false;
@@ -141,6 +163,12 @@ export const booksSlice = createSlice({
 	},
 })
 
-export const { initLS, pushToList } = booksSlice.actions;
+export const { 
+	initLS, 
+	pushToList, 
+	removeBookFromBL, 
+	addBookToBL,  
+	removeBookFromBusket
+} = booksSlice.actions;
 
 export default booksSlice.reducer;

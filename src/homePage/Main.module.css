@@ -10,3 +10,19 @@
     max-width: 1120px;
     margin: auto;
 }
+.paginationBtn{
+    display: flex;
+    margin: 75px auto  ;
+    justify-content: center;
+}
+
+.styleBtn {
+    margin: 25px;
+font-family: 'Ubuntu';
+font-size: 16px;
+font-weight: 700;
+line-height: 24px;
+border: none;
+background-color: #ffff;
+
+}

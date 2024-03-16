@@ -1,0 +1,51 @@
+.wrapp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 240px;
+    border-bottom: 1px solid #E7E7E7 ;
+    margin-bottom: 50px;
+    
+}
+
+.descriptionWrapp{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;  
+
+}
+
+.left{
+    display: flex ;
+
+}
+.card_img {
+    background-color: #D7E4FD;
+    object-fit: contain;
+    width: 255px;
+    height: 190px;
+    margin: 0px 20px 20px 0px;
+}
+
+.midlePath {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.upMidlePath {
+    min-width: 440px;
+    max-width: 440px;
+}
+
+.downMidlePath{
+    display: flex;
+
+}
+
+.deleteBook{
+    border: none;
+    background-color: #fff;
+    width: 24px;
+    height: 24px;
+}

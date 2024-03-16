@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 function Main() {
     const dispatch = useDispatch();
     const booksFetch = useSelector((state) => state.booksStore.booksFetch);
+    const currentPage = useSelector((state) => state.booksStore.currentPage);
+    const pageToRender = [1, 2, 3, 4, 5];
 
     return (
         <div className="container">
@@ -17,10 +19,16 @@ function Main() {
                         return <BookCard key={uuidv4()} book={book} />
                     })}
                 </div>
-                <div>
-                    <button onClick={() => dispatch(getBooks(1))}>1</button>
-                    <button onClick={() => dispatch(getBooks(2))}>2</button>
-                    <button onClick={() => dispatch(getBooks(3))}>3</button>
+                <div className={styles.paginationBtn}>
+                    {pageToRender.map(pageNumber => (
+                        <button
+                        className={styles.styleBtn}
+                            disabled={currentPage === pageNumber}
+                            onClick={() => dispatch(getBooks(pageNumber))}
+                        >
+                            {pageNumber}
+                        </button>
+                    ))}
                 </div>
             </div>
         </div>
