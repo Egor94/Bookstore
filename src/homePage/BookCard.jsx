@@ -7,7 +7,7 @@ function BookCard(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const book = props.book;
-
+    
     const fetchBook = async () => {
         dispatch(getBook(book.isbn13));
         navigate(`/book/${book.isbn13}`);

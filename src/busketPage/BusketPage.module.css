@@ -3,3 +3,19 @@
     margin: 0px auto 70px;
 
 }
+
+.totalPrice {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.totalDescription {
+    width: 255px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkOut {
+    width: 255px;
+}

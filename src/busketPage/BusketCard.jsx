@@ -8,6 +8,8 @@ function BusketCard(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const book = props.book;
+    const totalBook = +book.price.slice(1) * book.amount;
+    const sumBook = '$'+totalBook.toFixed(2);
 
     const fetchBook = async () => {
         // dispatch(getBook(book.isbn13));
@@ -33,6 +35,8 @@ function BusketCard(props) {
                     </div>
                 </div>
             <p>{book.price}</p>
+            <p className={styles.sumBook}>{sumBook}</p>
+
             <button className={styles.deleteBook} onClick={() => dispatch(removeBookFromBusket(book.isbn13))}>X</button>
 
         </div>

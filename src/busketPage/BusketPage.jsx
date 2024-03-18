@@ -23,7 +23,8 @@ function BusketPage() {
         return newBook;
 
     });
-
+    const totalPrice = busketBooks.reduce((acc, book) => acc + Number(book.price.slice(1)), 0);
+    const total = totalPrice.toFixed(2); 
     const fetchBusketBooks = () => {
         if (busketBooks.length) {
             return;
@@ -46,9 +47,20 @@ function BusketPage() {
                 <div className={styles.wrapp}>
                 <h1>Your Busket</h1>
                 {unitedBooks.length
-                    ? unitedBooks.map((book) => <BusketCard key={uuidv4()} book={book} />)
+                    ? unitedBooks.sort((a, b) => a.isbn13 > b.isbn13 ? 1 : -1).map((book) => <BusketCard key={uuidv4()} book={book} />)
                     : <p>Your busket is empty</p>
                 }
+                </div>
+                <div className={styles.totalPrice}>
+                    <div className={styles.totalDescription}>
+
+                        <span>Total:</span>
+                        <span className={styles.totalNumbers}>${total}</span>
+                    
+                    </div>
+                    <div>
+                    <button className={styles.checkOut}>Check out</button>
+                    </div>
                 </div>
             </div>
         </>
