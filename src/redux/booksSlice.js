@@ -117,7 +117,17 @@ export const booksSlice = createSlice({
 			localStorage.setItem('busketBooks', JSON.stringify(freshArr));
 			const newState = state.busketBooks.filter((item) => item.isbn13 !== id);
 			state.busketBooks = newState;
+		},
+
+		removeBookFromLike: (state, params) => {
+			const id = params.payload;
+			const getBooksFromLS = 	JSON.parse(localStorage.getItem('likeBooks'));
+			const freshArr = getBooksFromLS.filter((item) => item !== id);
+			localStorage.setItem('likeBooks', JSON.stringify(freshArr));
+			const newState = state.likeBooks.filter((item) => item.isbn13 !== id);
+			state.likeBooks = newState;
 		}
+
 	},
 	extraReducers: (builder) => {
 		// getBooks
@@ -164,6 +174,7 @@ export const booksSlice = createSlice({
 })
 
 export const { 
+	removeBookFromLike,
 	initLS, 
 	pushToList, 
 	removeBookFromBL, 

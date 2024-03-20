@@ -1,13 +1,31 @@
 import Header from "../common/Header";
-import { pushToList } from "../redux/booksSlice";
+import { pushToList, removeBookFromLike } from "../redux/booksSlice";
 import { useDispatch } from 'react-redux';
+import Like from "../img/like.svg";
+import RedLike from "../img/redLike.svg";
+import { useState } from "react";
+import styles from "../likePage/LikeCard.module.css";
 
 function BookPage(props) {
     const dispatch = useDispatch();
     const book = props.currentBook;
 
+    const likeFromLS = window.localStorage.getItem("likeBooks");
+    const parcedLikeFromLS = JSON.parse(likeFromLS);
+
+    const [isChecked, setIsChecked] = useState(parcedLikeFromLS.includes(book.isbn13));
+
     const pushBookToList = (listType) => {
         dispatch(pushToList({ id: book.isbn13, book, listType }))
+    }
+
+    const changeButtonStatus = (id) => {
+        if (isChecked) {
+            dispatch(removeBookFromLike(id))
+        } else {
+            dispatch(pushToList({ id: book.isbn13, book, listType: "likeBooks" }))
+        }
+        setIsChecked(!isChecked);
     }
 
     return (
@@ -45,10 +63,9 @@ function BookPage(props) {
                         <button onClick={() => pushBookToList('busketBooks')}>
                             add to busket
                         </button>
-                        <button onClick={() => pushBookToList('likeBooks')}>
-                            add to like
+                        <button className={styles.status_button} onClick={() => changeButtonStatus(book.isbn13)}>
+                            {isChecked ? (<img src={RedLike} alt="like" />) : (<img src={Like} alt="like" />)}
                         </button>
-                        <span>preview book</span>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,64 @@
+.wrapp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 240px;
+    border-bottom: 1px solid #E7E7E7 ;
+    margin-bottom: 50px;
+    
+}
+
+.descriptionWrapp{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;  
+
+}
+
+.left{
+    display: flex ;
+
+}
+.card_img {
+    background-color: #D7E4FD;
+    object-fit: contain;
+    width: 255px;
+    height: 190px;
+    margin: 0px 20px 20px 0px;
+}
+
+.midlePath {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.upMidlePath {
+    min-width: 440px;
+    max-width: 440px;
+}
+
+.downMidlePath{
+    display: flex;
+
+}
+
+.status_button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+  
+  .status_button.checked {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .status_button.unchecked {
+    background-color: #f44336; 
+    color: white;
+  }

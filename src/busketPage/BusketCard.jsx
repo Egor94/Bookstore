@@ -12,13 +12,13 @@ function BusketCard(props) {
     const sumBook = '$'+totalBook.toFixed(2);
 
     const fetchBook = async () => {
-        // dispatch(getBook(book.isbn13));
-        // navigate(`/book/${book.isbn13}`);
+        dispatch(getBook(book.isbn13));
+        navigate(`/book/${book.isbn13}`);
     }
 
     return (
-        <div className={styles.wrapp} onClick={fetchBook}>
-                <div>
+        <div className={styles.wrapp}>
+                <div onClick={fetchBook}>
                     <img className={styles.card_img} src={book.image} alt="#" />
                 </div>
                 <div className={styles.descriptionWrapp}>
@@ -34,11 +34,8 @@ function BusketCard(props) {
                         <button onClick={() => dispatch(pushToList({ id: book.isbn13, book, listType :'busketBooks'}))}>+</button>
                     </div>
                 </div>
-            <p>{book.price}</p>
-            <p className={styles.sumBook}>{sumBook}</p>
-
-            <button className={styles.deleteBook} onClick={() => dispatch(removeBookFromBusket(book.isbn13))}>X</button>
-
+            <p>book price: {book.price}</p>
+            <p className={styles.sumBook}>{sumBook}</p>            <button className={styles.deleteBook} onClick={() => dispatch(removeBookFromBusket(book.isbn13))}>X</button>   
         </div>
 
     )
