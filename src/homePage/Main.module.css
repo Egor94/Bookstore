@@ -1,7 +1,6 @@
 .wrapp {
     max-width: 1120px;
     margin: 0px auto 70px;
-
 }
 
 .books_list {
@@ -10,19 +9,19 @@
     max-width: 1120px;
     margin: auto;
 }
-.paginationBtn{
+
+.paginationBtn {
     display: flex;
-    margin: 75px auto  ;
+    margin: 75px auto;
     justify-content: center;
 }
 
 .styleBtn {
     margin: 25px;
-font-family: 'Ubuntu';
-font-size: 16px;
-font-weight: 700;
-line-height: 24px;
-border: none;
-background-color: #ffff;
-
+    font-family: "Ubuntu";
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    border: none;
+    background-color: #ffff;
 }

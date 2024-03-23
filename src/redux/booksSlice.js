@@ -1,7 +1,8 @@
-import { createAsyncThunk, createReducer, createSlice, current } from '@reduxjs/toolkit';
+import { createAsyncThunk, createReducer, createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
 	booksFetch: [],
+	searchValue: "",
 	currentPage: 1,
 	totalPages: 1,
 	isGetBooksLoading: false,
@@ -18,19 +19,31 @@ const initialState = {
 };
 
 export const getBooks = createAsyncThunk(
-	'booksStore/getBooks',
-	async (page) => {
+	"booksStore/getBooks",
+	async () => {
 		let json;
-		const data = await fetch(`https://api.itbook.store/1.0/new`);
+		const data = await fetch("https://api.itbook.store/1.0/new");
 		if (data.ok) {
 			json = await data.json();
 		}
-		return json; //action.payload
+		return json;
+	}
+);
+
+export const getBooksBySearch = createAsyncThunk(
+	"booksStore/getBooksBySearch",
+	async (query) => {
+		let json;
+		const data = await fetch(`https://api.itbook.store/1.0/search/${query}`);
+		if (data.ok) {
+			json = await data.json();
+		}
+		return json;
 	}
 );
 
 export const getBook = createAsyncThunk(
-	'booksStore/getBook',
+	"booksStore/getBook",
 	async (id) => {
 		let json;
 		const book = await fetch(`https://api.itbook.store/1.0/books/${id}`);
@@ -42,7 +55,7 @@ export const getBook = createAsyncThunk(
 );
 
 export const getBooksById = createAsyncThunk(
-	'booksStore/getBooksById',
+	"booksStore/getBooksById",
 	async ({ ids, lsKeyName }) => {
 		const result = [];
 
@@ -61,37 +74,37 @@ export const getBooksById = createAsyncThunk(
 );
 
 export const booksSlice = createSlice({
-	name: 'booksStore',
+	name: "booksStore",
 	initialState,
 	reducers: {
 		initLS: (state) => {
-			const busketBooks = window.localStorage.getItem('busketBooks');
+			const busketBooks = window.localStorage.getItem("busketBooks");
 			if (!busketBooks) {
-				window.localStorage.setItem('busketBooks', JSON.stringify([]));
+				window.localStorage.setItem("busketBooks", JSON.stringify([]));
 			}
 
-			const likeBooks = window.localStorage.getItem('likeBooks');
+			const likeBooks = window.localStorage.getItem("likeBooks");
 			if (!likeBooks) {
-				window.localStorage.setItem('likeBooks', JSON.stringify([]));
+				window.localStorage.setItem("likeBooks", JSON.stringify([]));
 			}
 
-			const userName = window.localStorage.getItem('userName');
+			const userName = window.localStorage.getItem("userName");
 			if (!userName) {
-				window.localStorage.setItem('userName', '');
+				window.localStorage.setItem("userName", "");
 			}
 
-			const userEmail = window.localStorage.getItem('userEmail');
+			const userEmail = window.localStorage.getItem("userEmail");
 			if (!userEmail) {
-				window.localStorage.setItem('userEmail', '');
+				window.localStorage.setItem("userEmail", "");
 			}
 
-			const userPassvord = window.localStorage.getItem('userPassvord');
+			const userPassvord = window.localStorage.getItem("userPassvord");
 			if (!userPassvord) {
-				window.localStorage.setItem('userPassvord', '');
+				window.localStorage.setItem("userPassvord", "");
 			}
 		},
 		pushToList: (state, params) => {
-			// listType may be 'busketBooks' or 'likeBooks'
+			// listType may be "busketBooks" or "likeBooks"
 			const { id, book, listType } = params.payload;
 			const listFromLs = window.localStorage.getItem(listType);
 			const parsedListFromLs = JSON.parse(listFromLs);
@@ -102,28 +115,28 @@ export const booksSlice = createSlice({
 
 		removeBookFromBL: (state, params) => {
 			const id = params.payload;
-			const getBooksFromLS = 	JSON.parse(localStorage.getItem('busketBooks'));
+			const getBooksFromLS = JSON.parse(localStorage.getItem("busketBooks"));
 			const foundByID = getBooksFromLS.indexOf(id);
 			getBooksFromLS.splice(foundByID, 1);
-			localStorage.setItem('busketBooks', JSON.stringify(getBooksFromLS));
+			localStorage.setItem("busketBooks", JSON.stringify(getBooksFromLS));
 			const indexBook = state.busketBooks.findIndex(book => book.isbn13 === id)
 			state.busketBooks.splice(indexBook, 1);
 		},
 
 		removeBookFromBusket: (state, params) => {
 			const id = params.payload;
-			const getBooksFromLS = 	JSON.parse(localStorage.getItem('busketBooks'));
+			const getBooksFromLS = JSON.parse(localStorage.getItem("busketBooks"));
 			const freshArr = getBooksFromLS.filter((item) => item !== id);
-			localStorage.setItem('busketBooks', JSON.stringify(freshArr));
+			localStorage.setItem("busketBooks", JSON.stringify(freshArr));
 			const newState = state.busketBooks.filter((item) => item.isbn13 !== id);
 			state.busketBooks = newState;
 		},
 
 		removeBookFromLike: (state, params) => {
 			const id = params.payload;
-			const getBooksFromLS = 	JSON.parse(localStorage.getItem('likeBooks'));
+			const getBooksFromLS = JSON.parse(localStorage.getItem("likeBooks"));
 			const freshArr = getBooksFromLS.filter((item) => item !== id);
-			localStorage.setItem('likeBooks', JSON.stringify(freshArr));
+			localStorage.setItem("likeBooks", JSON.stringify(freshArr));
 			const newState = state.likeBooks.filter((item) => item.isbn13 !== id);
 			state.likeBooks = newState;
 		}
@@ -133,17 +146,35 @@ export const booksSlice = createSlice({
 		// getBooks
 		builder.addCase(getBooks.pending, (state) => {
 			state.isGetBooksLoading = true;
-		})
+		});
 		builder.addCase(getBooks.fulfilled, (state, action) => {
+			state.searchValue = "";
 			state.isGetBooksLoading = false;
 			state.booksFetch = action.payload.books;
 			state.currentPage = Number(action.payload.page);
 			state.totalPages = Number(action.payload.total);
-		})
+		});
 		builder.addCase(getBooks.rejected, (state, action) => {
+			state.searchValue = "";
 			state.isGetBooksLoading = false;
-			state.getBooksError = 'Try later'
-		})
+			state.getBooksError = "Try later";
+		});
+
+		// getBooksBySearch
+		builder.addCase(getBooksBySearch.pending, (state) => {
+			state.isGetBooksLoading = true;
+		});
+		builder.addCase(getBooksBySearch.fulfilled, (state, action) => {
+			const query = action.meta.arg;
+			state.searchValue = query;
+			state.isGetBooksLoading = false;
+			state.booksFetch = action.payload.books;
+		});
+		builder.addCase(getBooksBySearch.rejected, (state) => {
+			state.searchValue = "";
+			state.isGetBooksLoading = false;
+			state.getBooksError = "Try later";
+		});
 
 		// getBook
 		builder.addCase(getBook.pending, (state) => {
@@ -153,9 +184,9 @@ export const booksSlice = createSlice({
 			state.isGetBookLoading = false;
 			state.currentBook = action.payload;
 		});
-		builder.addCase(getBook.rejected, (state, action) => {
+		builder.addCase(getBook.rejected, (state) => {
 			state.isGetBookLoading = false;
-			state.getBookError = 'Try later'
+			state.getBookError = "Try later"
 		});
 
 		// getBooksById
@@ -166,19 +197,19 @@ export const booksSlice = createSlice({
 			state.isBooksByIdLoading = false;
 			state[action.payload.lsKeyName] = action.payload.result;
 		});
-		builder.addCase(getBooksById.rejected, (state, action) => {
+		builder.addCase(getBooksById.rejected, (state) => {
 			state.isBooksByIdLoading = false;
-			state.booksByIdError = 'Try later'
+			state.booksByIdError = "Try later"
 		});
 	},
 })
 
-export const { 
+export const {
 	removeBookFromLike,
-	initLS, 
-	pushToList, 
-	removeBookFromBL, 
-	addBookToBL,  
+	initLS,
+	pushToList,
+	removeBookFromBL,
+	addBookToBL,
 	removeBookFromBusket
 } = booksSlice.actions;
 

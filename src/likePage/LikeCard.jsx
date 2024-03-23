@@ -1,6 +1,6 @@
 import styles from "./LikeCard.module.css";
-import { getBook } from '../redux/booksSlice';
-import { useDispatch } from 'react-redux';
+import { getBook } from "../redux/booksSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Like from "../img/like.svg";
 import RedLike from "../img/redLike.svg";
@@ -13,9 +13,9 @@ function LikeCard(props) {
 
     const [isChecked, setIsChecked] = useState(true);
     const fetchBook = async () => {
-        dispatch(getBook(book.isbn13));
+        await dispatch(getBook(book.isbn13));
         navigate(`/book/${book.isbn13}`);
-    }
+    };
 
     const changeButtonStatus = (id) => {
         const likeFromLS = window.localStorage.getItem("likeBooks");
@@ -32,7 +32,7 @@ function LikeCard(props) {
 
         }
         setIsChecked(!isChecked);
-    }
+    };
 
     return (
         <div className={styles.wrapp}>
@@ -53,7 +53,7 @@ function LikeCard(props) {
                 {isChecked ? (<img src={RedLike} alt="like" />) : (<img src={Like} alt="like" />)}
             </button>
         </div>
-    )
-}
+    );
+};
 
 export default LikeCard;

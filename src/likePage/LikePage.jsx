@@ -2,9 +2,10 @@ import Header from "../common/Header";
 import LikeCard from "./LikeCard";
 import styles from "./LikePage.module.css";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { getBooksById } from '../redux/booksSlice';
-import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from "react-redux";
+import { getBooksById } from "../redux/booksSlice";
+import { v4 as uuidv4 } from "uuid";
+import _ from "lodash";
 
 function LikePage() {
     const dispatch = useDispatch();
@@ -12,16 +13,15 @@ function LikePage() {
     const isBooksByIdLoading = useSelector((state) => state.booksStore.isBooksByIdLoading);
 
     const fetchLikeBooks = () => {
-        const likeBooksIds = window.localStorage.getItem('likeBooks');
+        const likeBooksIds = window.localStorage.getItem("likeBooks");
         const likeIds = JSON.parse(likeBooksIds);
 
-        // TODO: compare likeIds and likeBooks
-        // likeIds = [1, 2, 3, 4, 5]
-        // likeBooks = [{isbn13: 1, ...}, {isbn13: 2, ...}, {isbn13: 3, ...}]
+        const sortedIdsFromlikeBooks = likeBooks.map(book => book.isbn13).sort((a, b) => a > b ? 1 : -1);
+        const sortedLikeIds = likeIds.sort((a, b) => a > b ? 1 : -1);
+        const isEqual = _.isEqual(sortedIdsFromlikeBooks, sortedLikeIds);
 
-        const isEqual = false; // likeIds === likeBooks;
         if (!isEqual) {
-            dispatch(getBooksById({ ids: likeIds, lsKeyName: 'likeBooks' }));
+            dispatch(getBooksById({ ids: likeIds, lsKeyName: "likeBooks" }));
         }
     }
 
@@ -45,7 +45,7 @@ function LikePage() {
             </div>
 
         </>
-    )
-}
+    );
+};
 
 export default LikePage;

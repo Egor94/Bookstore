@@ -1,20 +1,19 @@
 import styles from "./BusketCard.module.css";
-import { getBook, removeBookFromBL, addBookToBL, removeBookFromBusket, pushToList } from '../redux/booksSlice';
-import { useDispatch } from 'react-redux';
+import { getBook, removeBookFromBL, removeBookFromBusket, pushToList } from "../redux/booksSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 
 function BusketCard(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const book = props.book;
     const totalBook = +book.price.slice(1) * book.amount;
-    const sumBook = '$' + totalBook.toFixed(2);
+    const sumBook = "$" + totalBook.toFixed(2);
 
     const fetchBook = async () => {
-        dispatch(getBook(book.isbn13));
+        await dispatch(getBook(book.isbn13));
         navigate(`/book/${book.isbn13}`);
-    }
+    };
 
     return (
         <div className={styles.wrapp}>
@@ -29,16 +28,25 @@ function BusketCard(props) {
                     </div>
                 </div>
                 <div className={styles.downMidlePath}>
-                    <button className={styles.counterButton} onClick={() => dispatch(removeBookFromBL(book.isbn13))}>-</button>
+                    <button
+                        className={styles.counterButton}
+                        onClick={() => dispatch(removeBookFromBL(book.isbn13))}
+                    >
+                        {"-"}
+                    </button>
                     <p className={styles.bookAmount}>{book.amount}</p>
-                    <button className={styles.counterButton} onClick={() => dispatch(pushToList({ id: book.isbn13, book, listType: 'busketBooks' }))}>+</button>
+                    <button
+                        className={styles.counterButton}
+                        onClick={() => dispatch(pushToList({ id: book.isbn13, book, listType: "busketBooks" }))}
+                    >
+                        {"+"}
+                    </button>
                 </div>
             </div>
-            <p className={styles.sumBook}>{sumBook}</p>       
-                 <button className={styles.deleteBook} onClick={() => dispatch(removeBookFromBusket(book.isbn13))}>X</button>
+            <p className={styles.sumBook}>{sumBook}</p>
+            <button className={styles.deleteBook} onClick={() => dispatch(removeBookFromBusket(book.isbn13))}>X</button>
         </div>
-
-    )
-}
+    );
+};
 
 export default BusketCard;

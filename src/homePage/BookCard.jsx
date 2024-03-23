@@ -1,6 +1,6 @@
 import styles from "./BookCard.module.css";
-import { getBook } from '../redux/booksSlice';
-import { useDispatch } from 'react-redux';
+import { getBook } from "../redux/booksSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function BookCard(props) {
@@ -9,9 +9,9 @@ function BookCard(props) {
     const book = props.book;
     
     const fetchBook = async () => {
-        dispatch(getBook(book.isbn13));
+        await dispatch(getBook(book.isbn13));
         navigate(`/book/${book.isbn13}`);
-    }
+    };
 
     return (
         <div className={styles.wrapp} onClick={fetchBook}>
@@ -24,7 +24,7 @@ function BookCard(props) {
                 <p className={styles.card_price}>{book.price}</p>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default BookCard;

@@ -8,6 +8,6 @@ function HomePage() {
 			<Main />
 		</>
 	);
-}
+};
 
 export default HomePage;

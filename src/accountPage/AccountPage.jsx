@@ -6,7 +6,7 @@ function AccountPage() {
 			<Header />
 			<div className="container">Account</div>
 		</>
-	)
-}
+	);
+};
 
 export default AccountPage;

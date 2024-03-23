@@ -1,13 +1,12 @@
 .wrapp {
     max-width: 1120px;
     margin: 0px auto 70px;
-
 }
 
 .totalPrice {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .totalDescription {
@@ -15,19 +14,19 @@
     display: flex;
     justify-content: space-between;
 }
-.totalNumbers{
-    font-family: Bebas Neue;
-font-size: 30px;
-font-weight: 500;
-line-height: 60px;
-text-align: left;
 
+.totalNumbers {
+    font-family: Bebas Neue;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 60px;
+    text-align: left;
 }
 
 .checkOut {
     margin-top: 20px;
     margin-bottom: 80px;
-    background-color:black;
+    background-color: black;
     color: #fff;
     width: 255px;
     font-family: Bebas Neue;
@@ -37,17 +36,13 @@ text-align: left;
     text-align: center;
     cursor: pointer;
 }
-.checkOut:hover{
-   background: #5B5A62;
-   font-size: 26px;
 
-
-       
+.checkOut:hover {
+    background: #5B5A62;
+    font-size: 26px;
 }
 
 .checkOut:focus {
     background: #A8A8A8;
     font-size: 26px;
-
- 
 }

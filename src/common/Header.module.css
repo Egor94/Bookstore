@@ -17,7 +17,7 @@
 .btnBookstore {
     background-color: #fff;
     border: none;
-    font-family: 'Bebas Neue';
+    font-family: "Bebas Neue";
     font-size: 40px;
     font-weight: 500;
     line-height: 60px;
@@ -25,18 +25,37 @@
     text-align: left;
 }
 
+.inputWrapp {
+    position: relative;
+}
+
+.inputEnd {
+    position: absolute;
+    right: 15px;
+    height: 55px;
+    width: 55px;
+}
+
+.inputButton {
+    cursor: pointer;
+}
+  
 .inputHeader {
     width: 545px;
     height: 55px;
     margin: 0 15px 0 15px;
     border-color: #E7E7E7;
-    color: #E7E7E7;
+    color: #313037;
     border-style: solid;
     padding-left: 15px;
     font-size: 16px;
 }
 
-.icon {
+.searchInputHeader {
+    background-color: #E7E7E7;
+}
+
+.icon {    
     width: 25px;
     height: 25px;
     margin: 15px;
@@ -48,7 +67,7 @@
 
 @media (max-width:800px) {
 
-    .inputHeader {
+    .inputHeader, .inputEnd {
         display: none;
     }
     .burgerBtnOpen {
