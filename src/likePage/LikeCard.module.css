@@ -3,22 +3,23 @@
     align-items: center;
     justify-content: space-between;
     height: 240px;
-    border-bottom: 1px solid #E7E7E7 ;
+    border-bottom: 1px solid #E7E7E7;
     margin-bottom: 50px;
-    
+
 }
 
-.descriptionWrapp{
+.descriptionWrapp {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;  
+    justify-content: space-evenly;
 
 }
 
-.left{
-    display: flex ;
+.left {
+    display: flex;
 
 }
+
 .card_img {
     background-color: #D7E4FD;
     object-fit: contain;
@@ -38,27 +39,25 @@
     max-width: 440px;
 }
 
-.downMidlePath{
+.downMidlePath {
     display: flex;
+
+}
+
+.likePrise {
+    margin-top: 20px;
+    font-family: "Bebas Neue";
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    text-align: left;
 
 }
 
 .status_button {
     padding: 10px 20px;
-    font-size: 16px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    background-color: #f0f0f0;
+    width: 16px;
+    border: none;
+    background-color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  }
-  
-  .status_button.checked {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .status_button.unchecked {
-    background-color: #f44336; 
-    color: white;
-  }
+}

@@ -44,7 +44,7 @@ function LikeCard(props) {
                     <div className={styles.upMidlePath}>
                         <h3>{book.title}</h3>
                         <p>{book.subtitle}</p>
-                        <p>1 book price: {book.price}</p>
+                        <p className={styles.likePrise}>{book.price}</p>
 
                     </div>
                 </div>

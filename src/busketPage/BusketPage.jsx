@@ -50,11 +50,10 @@ function BusketPage() {
                     ? unitedBooks.sort((a, b) => a.isbn13 > b.isbn13 ? 1 : -1).map((book) => <BusketCard key={uuidv4()} book={book} />)
                     : <p>Your busket is empty</p>
                 }
-                </div>
                 <div className={styles.totalPrice}>
                     <div className={styles.totalDescription}>
 
-                        <span>Total:</span>
+                        <span className={styles.totalNumbers}>Total:</span>
                         <span className={styles.totalNumbers}>${total}</span>
                     
                     </div>
@@ -62,6 +61,8 @@ function BusketPage() {
                     <button className={styles.checkOut}>Check out</button>
                     </div>
                 </div>
+                </div>
+                
             </div>
         </>
     )

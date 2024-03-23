@@ -40,12 +40,35 @@
 
 .downMidlePath{
     display: flex;
+    width: 165px;
+    justify-content: space-between;
 
+}
+.bookAmount {
+ 
 }
 
 .deleteBook{
+    font-size: 15px;
+    cursor: pointer;
     border: none;
     background-color: #fff;
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
+}
+
+.counterButton {
+    background-color: #fff;
+    border: none;
+    font-size: 25px;
+    width: 55px;    
+    cursor: pointer;
+
+}
+
+.sumBook {
+    width: 100px;
+    font-family: Bebas Neue;
+    font-size: 25px;
+    font-weight: 500;
 }
